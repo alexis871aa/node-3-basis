@@ -31,6 +31,21 @@ async function getNotes() {
 	return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : []
 }
 
+async function editNote(newTitle, id) {
+	const dbNotes = await fs.readFile(notesPath, { encoding: 'utf-8' })
+	const notes = Array.isArray(JSON.parse(dbNotes)) ? JSON.parse(dbNotes) : []
+	const index = notes.findIndex((note) => note.id === id)
+
+	const newNotes = notes.toSpliced(index, 1, {
+		title: newTitle,
+		id,
+	})
+
+	await fs.writeFile(notesPath, JSON.stringify(newNotes))
+
+	console.log(chalk.bgGreen('Note was changed!'))
+}
+
 async function printNotes() {
 	const notes = await getNotes()
 
@@ -59,6 +74,7 @@ async function removeNote(id) {
 // экспортируем эти функции
 module.exports = {
 	addNote,
-	printNotes,
+	getNotes,
 	removeNote,
+	editNote,
 }
