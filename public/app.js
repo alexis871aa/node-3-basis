@@ -7,25 +7,73 @@ document.addEventListener('click', async ({ target }) => {
 		})
 	}
 
-	if (target.dataset.type === 'edit') {
-		const id = target.dataset.id
-		const titleElement = target.parentNode.previousElementSibling
-		const title = titleElement.textContent.trim()
-		const newTitle = prompt('Введите новое название', title)
+	if (target.dataset.type === 'fresh') {
+		const { titleElement, titleInput, buttons } = getElements(target)
+		titleInput.value = titleElement.textContent.trim()
 
-		if (newTitle) {
-			await edit(newTitle, id)
+		toggle({
+			titleElement,
+			titleInput,
+			buttons,
+		})
 
-			titleElement.textContent = newTitle
-		}
+		titleInput.focus()
+	}
+
+	if (target.dataset.type === 'save') {
+		const { titleElement, titleInput, buttons } = getElements(target)
+
+		const newTitle = titleInput.value
+
+		await fresh(newTitle, target.dataset.id).then(
+			() => (titleElement.textContent = newTitle),
+		)
+
+		toggle({
+			titleElement,
+			titleInput,
+			buttons,
+		})
+	}
+
+	if (target.dataset.type === 'cancel') {
+		const { titleElement, titleInput, buttons } = getElements(target)
+
+		toggle({
+			titleElement,
+			titleInput,
+			buttons,
+		})
 	}
 })
+
+function toggle({ titleElement, titleInput, buttons }) {
+	titleElement.classList.toggle('d-none')
+	titleInput.classList.toggle('d-none')
+
+	buttons[0].classList.toggle('d-none')
+	buttons[1].classList.toggle('d-none')
+	buttons[2].classList.toggle('d-none')
+	buttons[3].classList.toggle('d-none')
+}
+
+function getElements(target) {
+	const titleElement = target.closest('li').children[0]
+	const titleInput = target.parentNode.previousElementSibling
+	const buttons = target.parentNode.children
+
+	return {
+		titleElement,
+		titleInput,
+		buttons,
+	}
+}
 
 async function remove(id) {
 	await fetch(`/${id}`, { method: 'DELETE' })
 }
 
-async function edit(newTitle, id) {
+async function fresh(newTitle, id) {
 	await fetch(`/${id}`, {
 		method: 'PUT',
 		headers: {

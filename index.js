@@ -2,7 +2,7 @@
 const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
-const { addNote, getNotes, removeNote, editNote } = require('./notes.controller')
+const { addNote, getNotes, removeNote, freshNote } = require('./notes.controller')
 
 const PORT = 3000
 // const basePath = path.join(__dirname, 'pages')
@@ -61,7 +61,7 @@ app.delete('/:id', async (req, res) => {
 })
 
 app.put('/:id', async (req, res) => {
-	await editNote(req.body.title, req.params.id)
+	await freshNote(req.body.title, req.params.id)
 
 	res.render('index', {
 		title: 'Express App',

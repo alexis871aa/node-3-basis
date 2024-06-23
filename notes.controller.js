@@ -31,7 +31,7 @@ async function getNotes() {
 	return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : []
 }
 
-async function editNote(newTitle, id) {
+async function freshNote(newTitle, id) {
 	const dbNotes = await fs.readFile(notesPath, { encoding: 'utf-8' })
 	const notes = Array.isArray(JSON.parse(dbNotes)) ? JSON.parse(dbNotes) : []
 	const index = notes.findIndex((note) => note.id === id)
@@ -43,7 +43,7 @@ async function editNote(newTitle, id) {
 
 	await fs.writeFile(notesPath, JSON.stringify(newNotes))
 
-	console.log(chalk.bgGreen('Note was changed!'))
+	console.log(chalk.bgGreen('Note was fresh!'))
 }
 
 async function printNotes() {
@@ -76,5 +76,5 @@ module.exports = {
 	addNote,
 	getNotes,
 	removeNote,
-	editNote,
+	freshNote,
 }
