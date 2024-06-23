@@ -56,9 +56,32 @@ async function removeNote(id) {
 	console.log(chalk.bgGreen('Note was deleted!'))
 }
 
+async function editNote(title, id) {
+	const notes = await getNotes()
+
+	if (!notes.some((note) => note.id === id)) {
+		console.log(chalk.bgRed('Note was not find!'))
+		return
+	}
+
+	const index = notes.findIndex((note) => note.id === id)
+
+	const note = {
+		...notes.find((note) => note.id === id),
+		title,
+	}
+
+	notes.splice(index, 1, note)
+
+	await fs.writeFile(notesPath, JSON.stringify(notes))
+
+	console.log(chalk.bgGreen('Note was edited!'))
+}
+
 // экспортируем эти функции
 module.exports = {
 	addNote,
 	printNotes,
 	removeNote,
+	editNote,
 }
