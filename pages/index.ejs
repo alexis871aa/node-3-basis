@@ -15,12 +15,18 @@
         </div>
     <% } %>
 
+    <% if(error) {%>
+        <div class="alert alert-danger">
+            Something went wrong!
+        </div>
+    <% } %>
+
 	<div class="container">
 		<h1><%= title %></h1>
 
 		<form action="/" method="post" class="mb-2">
 			<div class="form-group mb-2">
-				<input type="text" class="form-control" name="title" required>
+				<input type="text" class="form-control" name="title" >
 			</div>
 
 			<button class="btn btn-primary" type="submit">Create!</button>
@@ -37,7 +43,7 @@
                             <input class="title-input d-none" type="text" name="title-input" required>
 
                             <div class="buttons">
-                                <button class="btn btn-primary" data-type="fresh" data-id="<%= notes[i].id %>">Обновить</button>
+                                <button class="btn btn-primary" data-type="update" data-id="<%= notes[i].id %>">Обновить</button>
                                 <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">&times;</button>
                                 <button class="btn btn-success d-none" data-type="save" data-id="<%= notes[i].id %>">Сохранить</button>
                                 <button class="btn btn-danger d-none" data-type="cancel" data-id="<%= notes[i].id %>">Отменить</button>

@@ -2,7 +2,8 @@
 const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
-const { addNote, getNotes, removeNote, freshNote } = require('./notes.controller')
+const mongoose = require('mongoose')
+const { addNote, getNotes, removeNote, updateNote } = require('./notes.controller')
 
 const PORT = 3000
 // const basePath = path.join(__dirname, 'pages')
@@ -31,23 +32,37 @@ app.use(
 	}),
 )
 
+// основные контроллеры
+
 app.get('/', async (req, res) => {
 	// res.sendFile(path.join(basePath, 'index.html')) // при использовании шаблонизатора это лишняя строчка
 	res.render('index', {
 		title: 'Express App',
 		notes: await getNotes(),
 		created: false,
+		error: false,
 	})
 })
 
 app.post('/', async (req, res) => {
-	await addNote(req.body.title) // можем тут поценциально обрабатывать ошибки
+	try {
+		await addNote(req.body.title) // можем тут поценциально обрабатывать ошибки
 
-	res.render('index', {
-		title: 'Express App',
-		notes: await getNotes(),
-		created: true,
-	})
+		res.render('index', {
+			title: 'Express App',
+			notes: await getNotes(),
+			created: true,
+			error: false,
+		})
+	} catch ({ message }) {
+		console.error('Creation error', message)
+		res.render('index', {
+			title: 'Express App',
+			notes: await getNotes(),
+			created: false,
+			error: true,
+		})
+	}
 })
 
 app.delete('/:id', async (req, res) => {
@@ -57,19 +72,27 @@ app.delete('/:id', async (req, res) => {
 		title: 'Express App',
 		notes: await getNotes(),
 		created: false,
+		error: false,
 	})
 })
 
 app.put('/:id', async (req, res) => {
-	await freshNote(req.body.title, req.params.id)
+	await updateNote(req.body.title, req.params.id)
 
 	res.render('index', {
 		title: 'Express App',
 		notes: await getNotes(),
 		created: false,
+		error: false,
 	})
 })
 
-app.listen(PORT, () => {
-	console.log(chalk.green(`Server has been started on port ${PORT}...`))
-})
+mongoose
+	.connect(
+		'mongodb+srv://alexis871:Valentina2006$@cluster.7kdmzin.mongodb.net/notes?retryWrites=true&w=majority&appName=Cluster',
+	)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log(chalk.green(`Server has been started on port ${PORT}...`))
+		})
+	})

@@ -7,7 +7,7 @@ document.addEventListener('click', async ({ target }) => {
 		})
 	}
 
-	if (target.dataset.type === 'fresh') {
+	if (target.dataset.type === 'update') {
 		const { titleElement, titleInput, buttons } = getElements(target)
 		titleInput.value = titleElement.textContent.trim()
 
@@ -25,7 +25,7 @@ document.addEventListener('click', async ({ target }) => {
 
 		const newTitle = titleInput.value
 
-		await fresh(newTitle, target.dataset.id).then(
+		await update(newTitle, target.dataset.id).then(
 			() => (titleElement.textContent = newTitle),
 		)
 
@@ -73,7 +73,7 @@ async function remove(id) {
 	await fetch(`/${id}`, { method: 'DELETE' })
 }
 
-async function fresh(newTitle, id) {
+async function update(newTitle, id) {
 	await fetch(`/${id}`, {
 		method: 'PUT',
 		headers: {
