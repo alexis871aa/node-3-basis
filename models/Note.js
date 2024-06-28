@@ -5,7 +5,7 @@ const mongoose = require('mongoose') // импортируем mongoose
 
 // таким образом схема - это описание самой структуры данных, какие валидаторы будут использоваться, а модель это уже абстракция, с которой мы будем работать. То есть модель позволит нам доставать данные, их сохранять и т.д.
 
-const NoteSchema = mongoose.Schema({
+const NoteSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,

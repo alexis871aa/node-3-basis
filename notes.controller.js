@@ -1,6 +1,6 @@
 const chalk = require('chalk') // подключаем пакет для украшения консоли
 // подключаем модель Note для получения возможности чтения и записи в базу данных
-const Note = require('./models/note')
+const Note = require('./models/Note')
 
 async function addNote(title) {
 	// const notes = require('./db.json')     // обращение к базе данных делается по другому
