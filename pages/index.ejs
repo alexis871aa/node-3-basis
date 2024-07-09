@@ -9,6 +9,8 @@
 	<title><%= title %></title>
 </head>
 <body>
+    <%- include('./partials/user-header')%>
+
     <% if(created) {%>
         <div class="alert alert-success">
             Note has been created!
@@ -37,17 +39,22 @@
                 <ul class="list-group">
                     <% for (let i = 0; i < notes.length; i++) { %>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="title">
+                            <span class="title">
                                 <%= notes[i].title %>
-                            </div>
+                            </span>
+                            <span class="owner">
+                                <%= notes[i].owner %>
+                            </span>
                             <input class="title-input d-none" type="text" name="title-input" required>
 
-                            <div class="buttons">
-                                <button class="btn btn-primary" data-type="update" data-id="<%= notes[i].id %>">Обновить</button>
-                                <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">&times;</button>
-                                <button class="btn btn-success d-none" data-type="save" data-id="<%= notes[i].id %>">Сохранить</button>
-                                <button class="btn btn-danger d-none" data-type="cancel" data-id="<%= notes[i].id %>">Отменить</button>
-                            </div>
+                            <% if (notes[i].owner === userEmail) { %>
+                                <div class="buttons">
+                                    <button class="btn btn-primary" data-type="update" data-id="<%= notes[i].id %>">Обновить</button>
+                                    <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">&times;</button>
+                                    <button class="btn btn-success d-none" data-type="save" data-id="<%= notes[i].id %>">Сохранить</button>
+                                    <button class="btn btn-danger d-none" data-type="cancel" data-id="<%= notes[i].id %>">Отменить</button>
+                                </div>
+                            <% } %>>
                         </li>
                     <% } %>
                 </ul>

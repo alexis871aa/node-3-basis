@@ -1,5 +1,5 @@
 // для того, чтобы работать с базой данных Note, опишем модель БД в папке models
-const mongoose = require('mongoose') // импортируем mongoose
+const mongoose = require('mongoose'); // импортируем mongoose
 
 // описываем схему данных, она будет позволять mongoose валидировать нашиданные перед тем, как отправлять их в базу. Необходимо на уровне приложения сделать валидацию данных
 
@@ -10,8 +10,12 @@ const NoteSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-})
+	owner: {
+		type: String,
+		required: true,
+	},
+});
 
-const Note = mongoose.model('Note', NoteSchema)
+const Note = mongoose.model('Note', NoteSchema);
 
-module.exports = Note
+module.exports = Note;
