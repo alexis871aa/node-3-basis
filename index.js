@@ -14,7 +14,7 @@ const app = express();
 app.set('view engine', 'ejs'); // эта настройка позволяет теперь переименовать файл index.ejs в index.ejs
 app.set('views', __dirname + '/pages'); // меняем настройку папки с views на pages
 
-app.use(express.static(path.resolve(__dirname)));
+app.use(express.static(path.resolve(__dirname, 'public')));
 // устанавливаем возможность отправлять на сервер данные в формате JSON
 app.use(express.json());
 app.use(cookieParser()); // cookieParser() это middleware для express, который обрабатывает cookie в удобном нам формате
