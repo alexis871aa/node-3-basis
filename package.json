@@ -1,20 +1,33 @@
 {
-  "name": "note-app",
-  "version": "1.0.1",
-  "description": "This is simple NodeJS Application",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "node",
-    "javascript"
-  ],
-  "author": "Aleksey Sokolov <alexis871aa@yandex.ru>",
-  "license": "ISC",
-  "dependencies": {
-    "@types/yargs": "^17.0.32",
-    "chalk": "^4.1.2",
-    "yargs": "^17.7.2"
-  }
+	"name": "node-modules",
+	"version": "1.0.0",
+	"description": "This is simple NodeJS Application",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"serve": "nodemon  index.js"
+	},
+	"keywords": [
+		"node",
+		"javascript"
+	],
+	"author": "Aleksey Sokolov <alexis871aa@yandex.ru>",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"chalk": "^4.1.2",
+		"cookie-parser": "^1.4.6",
+		"dotenv": "^16.4.5",
+		"ejs": "^3.1.10",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.4.3",
+		"validator": "^13.12.0",
+		"yargs": "^17.7.2"
+	},
+	"devDependencies": {
+		"@types/yargs": "^17.0.32",
+		"express": "^4.19.2",
+		"nodemon": "^3.1.4",
+		"prettier": "^3.3.2"
+	}
 }
