@@ -167,12 +167,8 @@ app.put('/:id', async (req, res) => {
 	}
 });
 
-mongoose
-	.connect(
-		'mongodb+srv://alexis871:Valentina2006$@cluster.7kdmzin.mongodb.net/notes?retryWrites=true&w=majority&appName=Cluster',
-	)
-	.then(() => {
-		app.listen(port, () => {
-			console.log(chalk.green(`Server has been started on port ${port}...`));
-		});
+mongoose.connect(process.env.MONGODB_CONNECTIONS_STRING).then(() => {
+	app.listen(port, () => {
+		console.log(chalk.green(`Server has been started on port ${port}...`));
 	});
+});
